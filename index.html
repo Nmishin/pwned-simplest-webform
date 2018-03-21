@@ -3,11 +3,11 @@
 <h1>Check password</h1>
 <form action="/" method="POST" novalidate>
   <div>
-    {{ with .Errors.Password }}
-    <p class="error">{{ . }}</p>
-    {{ end }}
     <label>Your password:</label>
     <input type="text" name="password">
+    {{ with .Messages.Password }}
+    <p class="error">{{ . }}</p>
+    {{ end }}
   </div>
   <div>
     <input type="submit" value="Check password">

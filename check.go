@@ -8,11 +8,11 @@ import (
 
 type Passwords struct {
     Password string
-    Errors  map[string]string
+    Messages  map[string]string
 }
 
 func (pswd *Passwords) Validate() bool {
-    pswd.Errors = make(map[string]string)
+    pswd.Messages = make(map[string]string)
     client := hibp.NewClient()
     pwned, err := client.Pwned.Compromised(pswd.Password)
     if err != nil {
@@ -20,7 +20,9 @@ func (pswd *Passwords) Validate() bool {
         os.Exit(1)
     }
     if pwned {
-        pswd.Errors["Password"] = "Oh dear! You should avoid using that password"
-    }
-    return len(pswd.Errors) == 0
+        pswd.Messages["Password"] = "Oh dear! You should avoid using that password"
+    } else {
+		pswd.Messages["Password"] = "Password is OK!"
+	}
+    return len(pswd.Messages) == 0
 }
